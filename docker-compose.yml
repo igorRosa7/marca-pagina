@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:17
+    container_name: marca-pagina-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-marcapagina}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD no .env}
+      POSTGRES_DB: ${POSTGRES_DB:-marcapagina}
+    ports:
+      - "5432:5432"
+    volumes:
+      - marcapagina-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  marcapagina-data:
+    name: marcapagina-data
