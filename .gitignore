@@ -1,0 +1,6 @@
+# Dependências e segredos
+node_modules/
+.env
+
+# Build
+dist/
