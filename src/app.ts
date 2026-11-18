@@ -1,4 +1,8 @@
 import express from "express";
+import {
+  errorHandler,
+  notFoundHandler,
+} from "./shared/middlewares/error-handler.js";
 
 export function createApp() {
   const app = express();
@@ -8,6 +12,9 @@ export function createApp() {
   app.get("/health", (_req, res) => {
     res.json({ status: "ok" });
   });
+
+  app.use(notFoundHandler);
+  app.use(errorHandler);
 
   return app;
 }
